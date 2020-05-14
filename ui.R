@@ -13,7 +13,7 @@ ui <- fluidPage(
                       label = 'Number of cues', 
                       min=1, 
                       max = 1e6,
-                      value = 1e3, 
+                      value = 1e4, 
                       step = 10),
          
          numericInput(inputId = "max_radius", 
@@ -43,7 +43,7 @@ ui <- fluidPage(
                       label = 'Radius of clusters (km)', 
                       min=1, 
                       max = 50,
-                      value = 1, 
+                      value = 10, 
                       step = 1)
          )
   ),
@@ -53,7 +53,7 @@ ui <- fluidPage(
          h4('Adjust detection function:'),
          
          numericInput(inputId = "L", 
-                      label = 'Y intercept', 
+                      label = 'Maximum probability', 
                       min=0, 
                       max = 2,
                       value = 0.9, 
@@ -67,7 +67,7 @@ ui <- fluidPage(
                       step = 1),
          
          numericInput(inputId = "k", 
-                      label = 'Slope', 
+                      label = 'Logistic growth rate', 
                       min=-10, 
                       max = 0,
                       value = -0.25, 

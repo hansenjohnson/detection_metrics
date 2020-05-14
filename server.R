@@ -69,6 +69,7 @@ server <- function(input, output) {
   
   # compute detections
   det <- reactive({
+    
     # compute distribution
     det = df()
     L = input$L

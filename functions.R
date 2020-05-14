@@ -73,10 +73,10 @@ empirical_df = function(df){
   df_lg = df_lg[complete.cases(df_lg),]
   
   # create binomial model
-  lg = glm(nscore ~ r,family=binomial,data=df_lg)
+  lg = glm(nscore ~ r,data=df_lg,family=binomial(link='logit'))
   
   # create range vector
-  rv = seq(from = round(min(df_lg$r,na.rm = T),1), to = round(max(df_lg$r,na.rm = T),1), by = 0.05)
+  rv = seq(from = round(min(df_lg$r,na.rm = T),1), to = round(max(df_lg$r,na.rm = T),1), by = 0.1)
   
   # predict probabilities along range vector using model
   mp = predict(lg, data.frame(r = rv), se.fit = T)
