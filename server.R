@@ -6,6 +6,7 @@ server <- function(input, output) {
   # initialize reactive values
   v <- reactiveValues(detections = NULL,
                       metrics = NULL,
+                      histogram = NULL,
                       met = NULL)
   
   # compute real detection function
@@ -125,6 +126,21 @@ server <- function(input, output) {
   
   output$detections <- renderPlot({
     v$detections
+  })
+  
+  # plot histogram
+  observeEvent(input$go,{
+    
+    v$histogram = ggplot()+
+      geom_histogram(data = det(), aes(x=r, fill = as.character(detected)), color = "white", binwidth = 1, show.legend = FALSE)+
+      scale_fill_manual(values = det_cols)+
+      labs(x = 'Range (km)', y = 'Count')+
+      theme_bw()
+    
+  })
+  
+  output$histogram <- renderPlot({
+    v$histogram
   })
   
   # compute and plot metrics

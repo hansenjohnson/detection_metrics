@@ -31,20 +31,20 @@ ui <- fluidPage(
          
          conditionalPanel(
            condition = "input.distribution == 'clustered'",
-   
-         numericInput(inputId = "n_cluster", 
-                      label = 'Number of clusters', 
-                      min=1, 
-                      max = 50,
-                      value = 10, 
-                      step = 1),
-         
-         numericInput(inputId = "r_cluster", 
-                      label = 'Radius of clusters (km)', 
-                      min=1, 
-                      max = 50,
-                      value = 10, 
-                      step = 1)
+           
+           numericInput(inputId = "n_cluster", 
+                        label = 'Number of clusters', 
+                        min=1, 
+                        max = 50,
+                        value = 10, 
+                        step = 1),
+           
+           numericInput(inputId = "r_cluster", 
+                        label = 'Radius of clusters (km)', 
+                        min=1, 
+                        max = 50,
+                        value = 10, 
+                        step = 1)
          )
   ),
   
@@ -76,24 +76,31 @@ ui <- fluidPage(
   ),
   column(12,
          # leave blank to preserve alignment
-         ),
+  ),
   column(6,
-         plotOutput("distribution")
+         plotOutput("distribution"),
+         helpText('Spatial distribution of all available cues')
   ),
   column(6,
          plotOutput("detection_function"),
+         helpText('Platform detection function')
   ),
   column(12,
          h3('Step 2: run simulation and compare metrics'),
          actionButton(inputId = "go", label = 'Run simulation', width = '100%')
-         ),
-  column(6,
-         plotOutput("detections")
   ),
   column(6,
-         plotOutput("metrics")
+         plotOutput("detections"),
+         helpText('Spatial distribution of detected (black o) and undetected (grey x) cues'),
+         plotOutput("histogram"),
+         helpText('Counts of detected (black) and undetected (grey) cues in 1-km range bins'),
   ),
-  column(8,offset = 2,
+  column(6,
+         plotOutput("metrics"),
+         helpText('Empirical detection function (blue) and 95% confidence intervals (grey) 
+                  estimated based on ranges to detected and undetected calls. 
+                  The black curve is the true detection function. Various point-estimate 
+                  detection range metrics (described below) are overlayed for comparison'),
          tableOutput("met")
-  ),
+  )
 )
