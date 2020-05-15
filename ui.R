@@ -90,17 +90,17 @@ ui <- fluidPage(
          actionButton(inputId = "go", label = 'Run simulation', width = '100%')
   ),
   column(6,
-         plotOutput("detections"),
+         plotOutput("detections") %>% withSpinner(type = 8),
          helpText('Spatial distribution of detected (black o) and undetected (grey x) cues'),
-         plotOutput("histogram"),
+         plotOutput("histogram") %>% withSpinner(type = 8),
          helpText('Counts of detected (black) and undetected (grey) cues in 1-km range bins'),
   ),
   column(6,
-         plotOutput("metrics"),
+         plotOutput("metrics") %>% withSpinner(type = 8),
          helpText('Empirical detection function (blue) and 95% confidence intervals (grey) 
                   estimated based on ranges to detected and undetected calls. 
                   The black curve is the true detection function. Various point-estimate 
                   detection range metrics (described below) are overlayed for comparison'),
-         tableOutput("met")
+         tableOutput("met") %>% withSpinner(type = 8)
   )
 )

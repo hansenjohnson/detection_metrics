@@ -2,6 +2,7 @@
 
 # libraries
 library(shiny)
+library(shinycssloaders)
 set.seed(123)
 
 # plotting params
