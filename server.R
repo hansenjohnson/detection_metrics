@@ -115,9 +115,8 @@ server <- function(input, output) {
   observeEvent(input$go,{
     
     v$detections = ggplot()+
-      geom_point(data=det(),aes(x=x,y=y,shape=as.character(detected),color = as.character(detected)), show.legend = FALSE)+
-      scale_shape_manual(values = det_shapes)+
-      scale_color_manual(values = det_cols)+
+      geom_point(data=det() %>% filter(detected==0),aes(x=x,y=y),shape=4,color='grey')+
+      geom_point(data=det() %>% filter(detected==1),aes(x=x,y=y),shape=1,color='black')+
       coord_equal()+
       labs(x = 'X (km)', y = 'Y (km)')+
       theme_bw()
