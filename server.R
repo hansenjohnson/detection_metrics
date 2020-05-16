@@ -78,10 +78,10 @@ server <- function(input, output) {
     k = input$k
     
     # apply detection function
-    det$detected = NA
-    for(ii in 1:nrow(det)){
-      det$detected[ii] = rbinom(1, size = 1,prob = logistic_df(det$r[ii],L=L,x0=x0,k=k))
-    }
+    det = det %>%
+      mutate(
+        detected = rbinom(length(r),size = 1,prob = logistic_df(r,L=L,x0=x0,k=k))  
+      )
     
     # return variable
     det
@@ -164,23 +164,23 @@ server <- function(input, output) {
     mean_r = mean(det_only$r, na.rm = T) %>% round(.,3)
     median_r = median(det_only$r, na.rm = T) %>% round(.,3)
     max_r = max(det_only$r, na.rm = T) %>% round(.,3)
-    q95 = quantile(det_only$r, probs = 0.95, na.rm = T) %>% round(.,3)
+    q66 = quantile(det_only$r, probs = 0.66, na.rm = T) %>% round(.,3)
     
     # logistic regression stats
-    r50 = df_lg$r[which.min(abs(df_lg$p - 0.5))]
-    r33 = df_lg$r[which.min(abs(df_lg$p - 0.33))]
+    p50 = df_lg$r[which.min(abs(df_lg$p - 0.5))]
+    p33 = df_lg$r[which.min(abs(df_lg$p - 0.33))]
     
     # make metrics table
     met = tibble(
-      metric = c('EDR', 'mean', 'median', 'max', '50%', '33%','q95'),
-      r = c(rho, mean_r,median_r, max_r, r50, r33, q95),
+      metric = c('EDR', 'mean', 'median', 'max', 'p50', 'p33','q66'),
+      r = c(rho, mean_r,median_r, max_r, p50, p33, q66),
       definition = c('Effective detection radius', 
-                     'Mean detection distance', 
-                     'Median detection distance',
-                     'Maximum detection distance',
-                     'Distance to 50% detection probability',
-                     'Distance to 33% detection probability',
-                     'Distance to 95% detection quantile')
+                     'Mean detection range', 
+                     'Median detection range',
+                     'Maximum detection range',
+                     'Range to 50% detection probability',
+                     'Range to 33% detection probability',
+                     'Range to 66% detection quantile')
     ) %>%
       arrange(r)
     
