@@ -13,7 +13,7 @@ ui <- fluidPage(
                       label = 'Number of cues', 
                       min=1, 
                       max = 1e6,
-                      value = 1e4, 
+                      value = 1e3, 
                       step = 10),
          
          numericInput(inputId = "max_radius", 
